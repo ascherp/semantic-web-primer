@@ -4,6 +4,7 @@ This is a long-running Semantic Web primer.
 
 This is a living document. If you like to contribute, please contact ansgar.scherp (a t) uni-ulm.de
 
+Access the compiled PDF of the [Semantic Web Primer](https://github.com/ascherp/semantic-web-primer/blob/main/paper/main-semweb.pdf).
 
 ## Citation
 
