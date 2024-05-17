@@ -9,7 +9,7 @@ This is a living document. If you like to contribute, please contact ansgar.sche
 
 Please cite this work as follows:
 
----
+```
 @Article{scherp_et_al:TGDK.2.1.3,
   author =	{Scherp, Ansgar and Groener, Gerd and \v{S}koda, Petr and Hose, Katja and Vidal, Maria-Esther},
   title =	{{Semantic Web: Past, Present, and Future}},
@@ -26,5 +26,4 @@ Please cite this work as follows:
   doi =		{10.4230/TGDK.2.1.3},
   annote =	{Keywords: Linked Open Data, Semantic Web Graphs, Knowledge Graphs}
 }
----
-
+```
