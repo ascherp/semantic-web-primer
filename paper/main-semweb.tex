@@ -1,4 +1,5 @@
 \documentclass[a4paper,USenglish]{tgdk-v2021}
+\nolinenumbers
 
 \bibliographystyle{plainurl}
 
@@ -20,7 +21,7 @@
 \usepackage{todonotes}
 \usepackage{bigfoot}
 
-\newcommand{\arxivonly}[1]{} 
+\newcommand{\arxivonly}[1]{{\color{blue}#1}} 
 
 \author{Ansgar Scherp}{Ulm University, Germany \and \url{http://ansgarscherp.net}}{ansgar.scherp@uni-ulm.de}{https://orcid.org/0000-0002-2653-9245}{}
 
@@ -85,7 +86,10 @@
 
 \begin{document}
 \title{Semantic Web: Past, Present, and Future}
+\titlerunning{Semantic Web: Past, Present, and Future}
+\subtitle{Extended Version 2024-12-13 of TGDK 2(1): 3:1-3:37 (2024)}
 \maketitle
+
 
 \begin{abstract}
 
@@ -98,11 +102,45 @@ The classical topics we cover include knowledge representation, creating and val
 We enhance this classical view of the so-called ``Semantic Web Layer Cake'' with an update of recent concepts that include provenance, security and trust, as well as a discussion of practical impacts from industry-led contributions.
 We conclude with an outlook on the future directions of the Semantic Web.
 
-This is a living document. 
-If you like to contribute, please contact the first author and visit: \url{https://github.com/ascherp/semantic-web-primer}
 \end{abstract}
 
-\arxivonly{\tableofcontents}
+\clearpage
+
+\section*{Preamble}
+
+This article is a living document.
+The first version was written by Jannik, Scherp, and Staab in 2011~\cite{DBLP:journals/insk/JanikSS11}.
+It was translated to German and updated by Gröner, Scherp, and Staab in 2013~\cite{DBLP:books/ol/13/GronerSS13} and updated again by Gröner and Scherp in 2020~\cite{DBLP:books/degruyter/20/ScherpG20}.
+This release in 2024 reflects on the latest developments in knowledge graphs and large language models.
+It has been translated back to English and extended with contributions by Petr \v{S}koda, Katja Hose, and Maria-Esther Vidal.	
+
+\textbf{If you like to contribute}, please contact the first author and visit: \url{https://github.com/ascherp/semantic-web-primer}
+
+\textbf{Please cite this paper as}, see \url{https://dblp.org/rec/journals/tgdk/ScherpG0HV24.html?view=bibtex}:
+
+\begin{verbatim}
+	@article{DBLP:journals/tgdk/ScherpG0HV24,
+		author = {Ansgar Scherp and Gerd Gr{\"{o}}ner and
+			Petr Skoda and Katja Hose and
+			Maria{-}Esther Vidal},
+		title        = {Semantic Web: Past, Present, and Future},
+		journal      = {{TGDK}},
+		volume       = {2},
+		number       = {1},
+		pages        = {3:1--3:37},
+		year         = {2024},
+		url          = {https://doi.org/10.4230/TGDK.2.1.3},
+		doi          = {10.4230/TGDK.2.1.3},
+	}
+	
+\end{verbatim}
+
+\vfill
+
+\clearpage
+\tableofcontents
+\clearpage
+
 
 \section{Introduction}
 
@@ -331,8 +369,8 @@ A shapes graph is a labeled directed graph where nodes correspond to shapes, and
 The Shapes Constraint Language (SHACL)~\cite{SHACL} and Shape Expressions (ShEx)~\cite{SHEX}) are two W3C-recommendations  to express shapes graphs over RDF~\cite{DBLP:conf/www/RabbaniLH22}.
 
 The creation and validation of graph data are described in detail in Section~\ref{sec:creation}.
-\arxivonly{We introduce OWL and reasoning on graph data below.}
-
+We introduce OWL and reasoning on graph data below.
+ 
 \paragraph*{Reasoning and Linking of Graph Data: RDFS, OWL}
 
 Data from different sources may be heterogeneous. 
@@ -782,10 +820,10 @@ Query processing in a federation of graphs differs from querying a single source
 For example, \autoref{fig:federatedQuery} depicts a SPARQL query whose execution requires the evaluation of subqueries over three knowledge graphs: a Cancer Knowledge Graph (CKG)~\cite{DBLP:journals/semweb/AisoposJNPRSIVM23}, DBpedia, and Wikidata.
 This query could not be executed over a single data source unless the three knowledge graphs were physically materialized into one. Subqueries with a specific shape (e.\,g., star-shaped subqueries) need to be identified and posed against the knowledge graph(s) that is able to answer a particular part of the query. The federated query engine has to decompose input queries into these subqueries, find a plan to execute them and collect and merge the answers from the subqueries to produce a federated answer.
 
-\arxivonly{A federated query engine is a system designed to execute queries over a federation of graphs. 
+A federated query engine is a system designed to execute queries over a federation of graphs. 
 These engines leverage advanced query optimization methods to effectively decompose an input query into subqueries that can be executed over one or more graphs within the federation. 
 Furthermore, they identify the most appropriate graphs for executing each subquery.
-In addition to query execution, these engines also play a crucial role in discovering and managing efficient plans that minimize the data merging costs associated with collecting information from the selected knowledge graphs.}
+In addition to query execution, these engines also play a crucial role in discovering and managing efficient plans that minimize the data merging costs associated with collecting information from the selected knowledge graphs.
 
 A federated SPARQL query engine typically follows a mediator and wrapper architecture, which has been established in previous research~\cite{Wiederhold92,ZadorozhnyRVUB02}.
 Wrappers play a crucial role in translating SPARQL subqueries into requests sent to SPARQL endpoints, while also converting the endpoint responses into internal structures that the query engine can process.
@@ -801,9 +839,9 @@ Essentially, the mediator consists of three main components:
     Commonly, federated query engines follow heuristic-based methods to solve these two problems.
     For example, for query decomposition, heuristics based on exclusive groups~\cite{DBLP:conf/semweb/SchwarteHHSS11} or star-shaped subqueries~\cite{DBLP:conf/esws/VidalRLMSP10,DBLP:journals/tlsdkcs/VidalCAMP16,DBLP:conf/semweb/MontoyaSH17} enable to efficiently solve source selection and query decomposition in queries free of general predicates (e.\,g., \texttt{owl:sameAs} or \texttt{rdf:type}).
 
-\arxivonly{Moreover, more general approaches (e.\,g., Endris et al.~\cite{DBLP:journals/tlsdkcs/EndrisGLMVA18}) resort to metadata describing the star-shaped patterns existing in a knowledge graph to perform query decomposition and source selection accurately.
+Moreover, more general approaches (e.\,g., Endris et al.~\cite{DBLP:journals/tlsdkcs/EndrisGLMVA18}) resort to metadata describing the star-shaped patterns existing in a knowledge graph to perform query decomposition and source selection accurately.
 An \emph{exclusive group} corresponds to a set of triple patterns (corresponding to a conjunction of the triples) in a SPARQL query that can be exclusively executed over one data source, as in FedX~\cite{DBLP:conf/semweb/SchwarteHHSS11}. 
-Such a technique is implemented in the SPARQL engine FedX~\cite{DBLP:conf/semweb/SchwarteHHSS11}, which also optimizes the execution of \emph{star-shaped subqueries} by identifying groups of conjunctive triple patterns that a data source can execute independently from others.}
+Such a technique is implemented in the SPARQL engine FedX~\cite{DBLP:conf/semweb/SchwarteHHSS11}, which also optimizes the execution of \emph{star-shaped subqueries} by identifying groups of conjunctive triple patterns that a data source can execute independently from others.
 
   \item Query optimizer.
     This component identifies execution plans by combining star-shaped subqueries (SSQs) and utilizing physical operators implemented by the query engine.
@@ -820,9 +858,10 @@ Such a technique is implemented in the SPARQL engine FedX~\cite{DBLP:conf/semweb
     Thus, adaptivity can be achieved at the intra-operator level, where the operators can detect when graphs become blocked or data traffic bursts.
     Additionally, intra-operator opportunistically produce results as quickly as data arrives from the graphs, and can produce results incrementally. 
     Some opportunistic approaches~\cite{DBLP:conf/semweb/AcostaVLCR11,DBLP:conf/sigmod/HoseS12,DBLP:conf/i-semantics/GalkinEACVA17,DBLP:conf/semweb/AcostaV15} combine producing results quickly in an incremental fashion with greedy source selection so that the system stops querying additional graphs once the user's wishes, e.\,g., in terms of the minimum number of obtained results, are fulfilled. 
-    \arxivonly{The physical operators implemented by the SPARQL federated query engine ANAPSID~\cite{DBLP:conf/semweb/AcostaVLCR11} implement intra-operator adaptivity, enabling results generation even when the graphs became blocked.
+    %
+    The physical operators implemented by the SPARQL federated query engine ANAPSID~\cite{DBLP:conf/semweb/AcostaVLCR11} implement intra-operator adaptivity, enabling results generation even when the graphs became blocked.
     On the other hand, inter-operator adaptive strategies can produce an answer as soon as it is computed and can keep producing intermediate results even when data from a source becomes blocked. 
-    Acosta and Vidal~\cite{DBLP:conf/semweb/AcostaV15} propose adaptive query processing techniques that enable the re-ordering of a query execution plan to adjust execution schedulers to unexpected environmental conditions (e.\,g., changes at rates at which tuples arrive from graphs or a graph's availability).}
+    Acosta and Vidal~\cite{DBLP:conf/semweb/AcostaV15} propose adaptive query processing techniques that enable the re-ordering of a query execution plan to adjust execution schedulers to unexpected environmental conditions (e.\,g., changes at rates at which tuples arrive from graphs or a graph's availability).
 \end{itemize}
 
 During the query optimization process, a plan is generated as a bushy tree that comprises four join operators.  
@@ -839,7 +878,7 @@ Each SSQ is executed over the graph that can answer the SSQ. The execution engin
 \label{fig:federatedQuery}
 \end{figure}
 
-\arxivonly{The problem of query execution is defined in terms of data shipping strategies that are able to distribute query load between a server-client architecture of Linked Data Fragments.
+The problem of query execution is defined in terms of data shipping strategies that are able to distribute query load between a server-client architecture of Linked Data Fragments.
 State of the art approaches tackle this issue by employing graph partitioning techniques to generate graph pattern fragments.
 These fragments aim to improve query performance, scalability, and workload balance. 
 SAGE~\cite{DBLP:conf/f-ic/MinierSM19}, smart-KG~\cite{DBLP:conf/www/AzzamFABP20}, brTPF~\cite{DBLP:journals/corr/HartigA16}, SkyTPF~\cite{DBLP:conf/semweb/KelesH19}, SPF~\cite{DBLP:journals/corr/abs-2002-09172}, TPF~\cite{DBLP:journals/ws/VerborghSHHVMHC16}, and WiseKG~\cite{DBLP:conf/www/AzzamAMKPH21} are exemplary approaches for accessing graph patterns of varying shapes.
@@ -847,7 +886,7 @@ These interfaces for Linked Data Fragments may significantly accelerate query ex
 Moreover, query rewriting based on these fragments correctly produces all the answers of the rewritten query, i.\,e., the methods are sound and complete.
 However, it is important to note that there exists a trade-off between memory consumption and execution time improvement so that storage requirements (e.\,g., smart-KG) can be twice as high in comparison to other approaches (e.\,g., SAGE, TPF, or SPF), due to the need to store partitions and their associated metadata. 
 
-Because of the variety of available interfaces, some works have proposed methods for heterogeneous federations~\cite{DBLP:conf/www/HelingA22,DBLP:conf/semweb/MontoyaKH19,DBLP:conf/semweb/MontoyaAH18a,DBLP:conf/esws/ChengH22}, where the goal is to find efficient query execution plans in consideration of the constraints as well as strengths of the available interface.}
+Because of the variety of available interfaces, some works have proposed methods for heterogeneous federations~\cite{DBLP:conf/www/HelingA22,DBLP:conf/semweb/MontoyaKH19,DBLP:conf/semweb/MontoyaAH18a,DBLP:conf/esws/ChengH22}, where the goal is to find efficient query execution plans in consideration of the constraints as well as strengths of the available interface.
 
 \section{Trustworthiness and Provenance of Graph Data}
 \label{sec:trustprovenance}
@@ -998,7 +1037,8 @@ Two of the latest notable supporters of graph-based data are online auctioneer e
 These and other success stories of the Semantic Web in industries and industry-scale knowledge graphs are described by Noy et al.~\cite{DBLP:journals/cacm/NoyGJNPT19}.
 Further analyses and surveys arguing about the importance but also challenges of using graph data can be found in the literature like the 2020 survey of Sahu et al.~\cite{DBLP:journals/vldb/SahuMSLO20} and the 2021 reflection about the future of graphs by Sakr et\,al.~\cite{DBLP:journals/cacm/SakrBVIAAAABBDV21}.
 The usefulness of knowledge graphs and semantic-based data modeling for complex systems is also discussed in the 2024 book by Abonyi et al.~\cite{AbonyiEtAl2024OntologiesInIndustry}.
-\arxivonly{The importance of graph databases is also reflected by the Forbes business magazine, which predicted in 2019 that graph databases would be the next mainstream database technology\footnote{\url{https://www.forbes.com/sites/cognitiveworld/2019/07/18/graph-databases-go-mainstream}}.}
+%
+The importance of graph databases is also reflected by the Forbes business magazine, which predicted in 2019 that graph databases would be the next mainstream database technology\footnote{\url{https://www.forbes.com/sites/cognitiveworld/2019/07/18/graph-databases-go-mainstream}}.
 
 Regarding lightweight open graph data, Schema.org defines schemas for modeling data on web pages to provide information about the underlying data structures and meaning of the data.
 Search engines can use this additional information to better analyze the content of web pages.
@@ -1053,13 +1093,6 @@ Neuro-symbolic systems could also address the problem that LLMs' output is based
 
 Finally, we like to point to existing literature discussing the future directions of research on the Semantic Web~\cite{DBLP:journals/corr/abs-2309-13939} and Knowledge Graphs~\cite{DBLP:journals/corr/abs-2308-14217}.
 Breit et al. \cite{10.1145/3586163} conducted a survey on the fusion of Semantic Web and Machine Learning, exploring the opportunities arising from the convergence of these two paradigms.
-
-\subparagraph*{Acknowledgements}
-
-This article is a living document.
-The first version was written by Jannik, Scherp, and Staab in 2011~\cite{DBLP:journals/insk/JanikSS11}.
-It was translated to German and updated by Gröner, Scherp, and Staab in 2013~\cite{DBLP:books/ol/13/GronerSS13} and updated again by Gröner and Scherp in 2020~\cite{DBLP:books/degruyter/20/ScherpG20}.
-This release in 2024 reflects on the latest developments in knowledge graphs and large language models.
 
 \bibliography{tgdkbib}
 
