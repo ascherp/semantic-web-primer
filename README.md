@@ -6,6 +6,10 @@ This is a living document. If you like to contribute, please contact ansgar.sche
 
 Access the compiled PDF of the [Semantic Web Primer](https://github.com/ascherp/semantic-web-primer/blob/main/paper/main-semweb.pdf).
 
+Updates:
+
+- Extended Version 2024-12-13: added more details about federated SPARQL querying
+
 ## Citation
 
 Please cite this work as follows:
