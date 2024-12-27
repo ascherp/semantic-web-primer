@@ -4,11 +4,13 @@ This is a long-running Semantic Web primer.
 
 This is a living document. If you like to contribute, please contact ansgar.scherp (a t) uni-ulm.de
 
-Access the compiled PDF of the [Semantic Web Primer](https://github.com/ascherp/semantic-web-primer/blob/main/paper/main-semweb.pdf).
+Access to the latest version of the compiled PDF of the [Semantic Web Primer](https://github.com/ascherp/semantic-web-primer/blob/main/paper/main-semweb.pdf).
 
-Updates:
+Versions:
+ 
+- [Version 2024-12-13 on arXiv](https://arxiv.org/abs/2412.17159): added more details about federated SPARQL querying, extension of previous version
 
-- Extended Version 2024-12-13: added more details about federated SPARQL querying
+- [Version 2024-05-03 in TGDK](https://drops.dagstuhl.de/entities/document/10.4230/TGDK.2.1.3): publication of the survey in the journal on Transactions on Graph Data and Knowledge
 
 ## Citation
 
