@@ -87,7 +87,7 @@
 \begin{document}
 \title{Semantic Web: Past, Present, and Future}
 \titlerunning{Semantic Web: Past, Present, and Future}
-\subtitle{Extended Version from 2025-04-23 of TGDK 2(1): 3:1-3:37 (2024)}
+\subtitle{Extended Version from 2025-11-11 of TGDK 2(1): 3:1-3:37 (2024)}
 \maketitle
 
 
@@ -99,12 +99,25 @@ Throughout the years, semantic technologies, and in particular knowledge graphs,
 
 In this paper, we recap the classical concepts and foundations of the Semantic Web as well as modern and recent concepts and applications, building upon these foundations. 
 The classical topics we cover include knowledge representation, creating and validating knowledge on the Web, reasoning and linking, and distributed querying.
-We enhance this classical view of the so-called ``Semantic Web Layer Cake'' with an update of recent concepts that include provenance, security and trust, as well as a discussion of practical impacts from industry-led contributions.
+We enhance this classical view of the so-called ``Semantic Web Layer Cake'' with an update of recent concepts.
+These include provenance, security and trust, as well as a discussion of practical impacts from industry-led contributions.
+%
+We also provide an overiew of shallow and deep machine learning methods for knowledge graphs and discuss the relation of language models and knowledge graphs.
+%
 We conclude with an outlook on the future directions of the Semantic Web.
 
 \end{abstract}
 
 \clearpage
+
+\section*{Changelog}
+
+\begin{itemize}
+\item \textbf{Update in November 2025}: Added an overview of \textit{machine learning methods for knowledge graphs} in Section~\ref{sec:machine-learning-on-knowledge-graphs}, particularly shallow graph embeddings and neural networks for graphs.
+We discuss \textit{language models} and their relation to and use for knowledge graphs in Section~\ref{sec:language-models-and-knowledge-graphs}.
+\end{itemize}
+
+
 
 \section*{Preamble}
 
@@ -197,6 +210,10 @@ The creation and maintenance of graph data is described in Section~\ref{sec:crea
 Section~\ref{sec:reasoning} discusses the principle of reasoning and logical inference.
 Section~\ref{sec:distributeddataquerying} then shows how to query over the (distributed) graph data on the Semantic Web.
 We discuss the trustworthiness and provenance of data on the Semantic Web in Section~\ref{sec:trustprovenance}.
+%
+Machine learning methods for knowledge graphs are discussed in Section~\ref{sec:machine-learning-on-knowledge-graphs}, particularly shallow graph embeddings and neural networks for graphs.
+We discuss language models and their relation and use for knowledge graphs in Section~\ref{sec:language-models-and-knowledge-graphs}.
+%
 We provide extensive examples of applications based on and using the Semantic Web and its technologies in Section~\ref{sec:examples}.
 Finally, we reflect on the impact the Semantic Web has on practitioners in Section~\ref{sec:impact}.
 Finally, we conclude with a brief outlook on future developments for the Semantic Web.
@@ -302,7 +319,7 @@ Especially in a mega-system, participation, i.\,e., publishing and consumption o
 \end{enumerate}
 These principles are achieved through a mix of protocols, language definitions, and software components.
 Some of these components have already been standardized by the W3C, which has defined both syntax and formal semantics of languages and protocols. 
-Other components are not yet standardized, but they are already provided for the so-called \emph{Semantic Web Layer Cake} by Tim Berners-Lee (cf.~{\tt http://www.w3.org/2007/03/layerCake.png}).
+Other components are not yet standardized, but they are already provided for the so-called \emph{Semantic Web Layer Cake}\index{Semantic Web Layer Cake} by Tim Berners-Lee (cf.~{\tt http://www.w3.org/2007/03/layerCake.png}).
 We present a variant of the Semantic Web architecture, distinguishing between standardized languages and current developments.
 A graphical representation of the architecture can be found in Figure~\ref{fig:layercake}.
 
@@ -442,7 +459,7 @@ In this context, we also introduce and discuss the notion of ontology design pat
 
 \subsection{Linked Graph Data on the Web}
 \label{sec:linked-graph-data}
-The \emph{Linked Data} principles\myurl{http://www.w3.org/DesignIssues/LinkedData.html} define the methods for representing, publishing, and using data on the Semantic Web.
+The \emph{Linked Data} principles\myurl{http://www.w3.org/DesignIssues/LinkedData.html}\index{Linked Data principles} define the methods for representing, publishing, and using data on the Semantic Web.
 They can be summarized as follows:
 \begin{enumerate}
 \item URIs are used as names for entities.
@@ -928,6 +945,186 @@ Through this mechanism, it is possible to combine and nest signed graphs.
 It is thus possible to re-sign already signed graphs together with other, new graph data, etc.
 This makes it possible to build complex chains of trust between publishers of graph data and to be able to prove the origin of data~\cite{DBLP:conf/esws/KastenSS14,DBLP:phd/dnb/Kasten16}.
 
+
+%%% -----------------------------------------------------
+    
+\section{Machine Learning on Knowledge Graphs}
+\label{sec:machine-learning-on-knowledge-graphs}
+\index{Semantic Web!Machine learning on knowledge graphs}
+
+Machine learning on graphs is one of the most active fields of research in AI~\cite{hamilton-book}.
+We will first consider graph embeddings for shallow representations of nodes, edges, and graphs.
+Then we turn our attention to neural networks for graphs (GNNs), which can compute more complex representations.
+Finally, we discuss developments in language models and their relationship to and integration with knowledge graphs.
+    
+\subsection{Graph Embeddings}
+\index{Graph Embeddings}
+
+Graph embeddings are used to compute representations of nodes, edges, and graphs for use in machine learning tasks, such as input for GNNs.
+%
+The basic idea behind embeddings is to use unsupervised learning to determine a representation of nodes, for example, via their neighborhood relationships in a high-dimensional space.
+
+\subsubsection{Classical Graph Embeddings}
+Classic approaches to the unsupervised calculation of graph embeddings include Node2Vec~\cite{node2vec}, which uses random graph traversal to calculate how similar the start node is to nodes in its neighborhood.
+However, graph embeddings also include self-supervised aspects, such as in Deep Walk~\cite{deepwalk}, a generalization of Node2Vec using a weighted breadth-first versus depth-first search.
+In Deep Walk, random traversals in the graph are also calculated starting from a node.
+The embeddings are then calculated using, among other things, the skip-gram idea from the embedding model Word2Vec~\cite{word2vec} for texts. 
+The latter provides for an element to be removed from a sequence in a self-supervised approach and predicted by a neural network.
+In the context of Deep Walk, the sequences are the random traversals in the graph and the elements are the nodes in the graph.
+%
+An overview of classical graph embeddings can be found in Hamilton~\cite{hamilton-book} and Murphy~\cite{murphy-book}, among others.
+
+
+\subsubsection{Embeddings for Knowledge Graphs}
+Specific embedding models for knowledge graphs include RDF2Vec~\cite{rdf2vec} and a variety of approaches based on it.
+In general, embeddings for knowledge graphs can be classified based on Biswas et al.~\cite{biswas_et_al:TGDK.1.1.4} into translation-based models based on a distance function between nodes, models that model probabilities and uncertainty, and approaches based on semantic similarity determined by tensor decomposition.
+
+Examples include TransE~\cite{transe} as a translation-based model for representing nodes and edges in a common embedding space.
+TransR~\cite{transr} extends TransE to support 1:N and other relationships.
+It uses separate embedding spaces, i.\,e., a separate matrix for each relation~\cite{biswas_et_al:TGDK.1.1.4}, and therefore requires more memory.
+While TransR is limited to the immediate neighborhood, PTransR extends this to include the encoding of paths.
+TransG~\cite{transg} is based on a mixed model of Gaussian distributions to map different meanings of a relation such as \texttt{hasPart}.
+
+While these embedding models operate on knowledge graphs, they do not map the specific semantics of Semantic Web standards such as RDFS and OWL.
+One approach in this direction is RotateE~\cite{rotate}, which uses rotational transformations to map complex relationships in knowledge graphs~\cite{biswas_et_al:TGDK.1.1.4}, such as symmetric and antisymmetric relations, inversion, and composition.
+Graph embedding models that can map parts of the semantics of OWL ontologies are Trans\-OWL~\cite{transowl} or OWL2Vec~\cite{owl2vec}. 
+These map the semantics of description logic expressions such as the intersection of two classes, subclasses, etc. directly in the training of the embeddings using special loss functions.
+TransOWL extends previous embedding models by encoding not only the directly observed graph, but also knowledge derived from conclusions based on available axioms. 
+To do this, TransOWL integrates the OWL axioms directly into the loss function, effectively performing inferences during training. 
+TransOWL is derived from TransE, while its variant TransROWL is based on TransR. 
+In addition, there is also a version that extends TransOWL with equivalence axioms and inverse relations. 
+Another model for OWL is OWL2Vec*, which uses random walks and word embeddings to encode the semantics of OWL ontologies.
+
+\subsubsection{Discussion of Graph Embeddings}
+
+Graph embeddings have a number of disadvantages~\cite{hamilton-book}.
+First, the calculations are slow due to high redundancy.
+Second, the embeddings of a graph cannot be easily transferred to new nodes or even new graphs without further learning.
+Therefore, graph embeddings are inherently transductive, meaning they assume that the entire graph is available at training time and can be used for unsupervised (Node2Vec) or self-supervised learning (Deep Walk).
+Therefore, the embeddings that have already been calculated cannot be transferred to new nodes.
+The inefficiency caused by redundant calculations stems from the fact that a separate embedding must be determined for each node via random traversals.
+In doing so, the same nodes are often visited multiple times for different embeddings.
+It should also be mentioned that the primary goal of graph embeddings is to determine a suitable representation of graphs when dataset-specific features are not available or are to be enriched. 
+Therefore, embeddings do not usually have a specific downstream task such as node classification.
+
+\subsection{Neural Networks for Graphs}
+\index{Neural networks for graphs}
+
+Graph Neural Networks (GNNs) extend the concept of graph embeddings by enabling more complex representations to be calculated based on the node features.
+In contrast to graph embeddings, GNNs are typically characterized by supervised or semi-supervised learning.
+%
+The origins of GNNs can be traced back at least to the work of Gori et al.~\cite{gorietal2005} and Scarselli et al.~\cite{scarsellietal2009}.
+
+\subsubsection{Categories of Graph Neural Networks (GNNs)}
+GNNs can be classified as isotropic and anisotropic, as well as transductive and inductive~\cite{DBLP:journals/nn/GalkeVFZHS23}.
+The majority of GNNs are based on the principle of message passing, in which features of neighboring nodes are used to compute representations of the nodes.
+In isotropic GNNs, all edges have the same influence on the calculation of node representations, while in anisotropic models, the edge weights and thus the representations of neighboring nodes are different or are learned.
+
+As described above, transductive GNNs assume that the unlabeled nodes from the test set are also available at training time. 
+These can be used in various calculations, for example for message passing, but have no influence on the error function of the model and are therefore not taken into account in the learning process using backpropagation.
+%
+Examples of GNNs are GCN (isotropic and transductive), which is motivated by spectral analysis in graph theory~\cite{gcn}.
+GAT (anisotropic and inductive) learns the edge weights using attention~\cite{gat}.
+GraphSAGE (isotropic and inductive) uses a sampler, among other things, and thus scales for large graphs.
+When the hyperparameters are optimized, these models are powerful representatives of GNNs with very good performance~\cite{pitfalls,DBLP:journals/corr/abs-2406-08993-log2024}.
+
+In classical GNNs such as GCN, message passing is used to efficiently calculate embeddings for all nodes in the graph simultaneously~\cite{hamilton-book}.
+As mentioned above, GNNs are typically computed through supervised or semi-supervised learning and involve a downstream task such as node or graph classification, graph regression, and edge prediction (further applications are described in Murphy~\cite{murphy-book}).
+Learning using GNNs is often referred to as semi-supervised because in many datasets and methods, only a few nodes per class are labeled with a gold standard label~\cite{hamilton-book}; for example, less than $5\%$ of the nodes have a label when training a GCN~\cite{gcn}.
+
+
+\subsubsection{Oversquashing and Oversmoothing in GNNs}
+One problem with classical GNNs is that long paths cannot be mapped, leading to oversquashing and oversmoothing~\cite{hamilton-book}.
+Oversquashing refers to when the representations of distant nodes are ``squashed'' together over only a few edges, leading to a loss of important information for calculating the representation of the target node.
+Oversmoothing refers to the incremental alignment of all representations in the GNN when, after many message-passing steps, the representations of the nodes lose their individual features.
+These problems can be effectively addressed by inserting additional learnable weights between the GNN layers, as in the GCNII model~\cite{gcnii}.
+Other approaches, such as Graph-MLP, no longer depend on message passing and apply contrastive learning~\cite{graph-mlp}.
+
+\subsubsection{Homophilic and Heterophilic Graphs}
+
+Another discussion surrounding GNNs concerns the distinction between homophilic and heterophilic graphs, i.\,e., whether neighboring nodes are highly likely to belong to the same class or to different classes~\cite{DBLP:conf/iclr/0001LST22-homophily-necessary}.
+While models such as GCN assume that homophily is important for good performance, later work concludes that graphs can also be heterophilic as long as the neighborhood distribution of classes is consistent~\cite{DBLP:conf/iclr/0001LST22-homophily-necessary}.
+%
+A good overview of the most important GNNs can be found in Hamilton~\cite{hamilton-book} and Murphy~\cite{murphy-book}, among others.
+
+\subsubsection{GNNs for Knowledge Graphs}
+
+Specific neural networks for knowledge graphs include R-GCN~\cite{r-gcn}, an extension of GCN for learning relation-specific adjacency matrices.
+Since the number of relations in knowledge graphs can be very large~\cite{DBLP:journals/dpd/GottronKS15}, R-GCN approximates the relation-specific adjacency matrices using a linear combination of fewer base matrices.
+KGAT is a graph attention neural network based on a hybrid combination of user-item graphs and knowledge graphs~\cite{kgat}.
+The goal is to model higher-order relationships such as user-book-author-user and user-book-genre-user, and it is used for recommendation tasks.
+
+A detailed overview of neural networks for knowledge graphs can be found, e.\,g., in Kumar et al.~\cite{DBLP:journals/access/YeKSSW22-kg-survey}.
+A discussion of future topics can be found in d'Amato et al.~\cite{DBLP:journals/tgdk/dAmatoMMS23}.
+ 
+
+\section{Language Models and Knowledge Graphs}
+\label{sec:language-models-and-knowledge-graphs}
+\index{Language Models and Knowledge Graphs}
+\index{Semantic Web!Language Models and Knowledge Graphs}
+
+Language models based on neural networks, in particular the Transformer architecture~\cite{DBLP:conf/nips/VaswaniSPUJGKP17}, are often distinguished into encoder models (e.\,g., BERT~\cite{bert}), encoder-decoder models (such as T5~\cite{t5}), and decoder models (e.\,g., Llama~\cite{llama3} and GPT~\cite{gpt4}).
+These differ in their capabilities and primary uses.
+Encoder models are particularly suitable for classification~\cite{DBLP:conf/acl/GalkeS22}, while decoder models dominate the field of generative AI and chatbots~\cite{are-we-makin-progress}.
+%
+However, all models share characteristics that are summarized under the term \textit{foundation models}~\cite{foundation-models}.
+These include pre-training using self-supervised learning, the use of a broad corpus as training data, and the associated applicability or adaptability to a variety of downstream tasks.
+The size of the language models ranges from several hundred million parameters (BERT) to billions of parameters (Llama, GPT).
+%
+% SLM vs LLMs
+These are therefore also referred to as small language models versus large language models.
+
+\subsection{Graph Transformer, Language Models, and Retrieval Augmented Generation}
+
+Adaptations of the transformer architecture to graphs, such as graph transformer networks~\cite{graph-transformer-networks}, have already shown strong performance on downstream tasks in 2021.
+However, initial approaches were not yet based on pre-training models and were therefore not transferable to different downstream tasks. 
+One reason for this is that the features between the datasets are too specific and also have different dimensionalities.
+%
+Some early approaches to integrating knowledge graphs with language models have therefore aimed to encode the facts from knowledge graphs directly into the parameters of language models.
+Interesting approaches in this direction include SKILL~\cite{DBLP:conf/naacl/MoiseevDAJ22-skill}, in which the language model T5 was trained on a textual representation of factual knowledge from knowledge graphs. 
+SKILL shows that pre-training T5 on the Wikidata knowledge graph~\cite{DBLP:journals/cacm/VrandecicK14} leads to better downstream performance.
+%
+The knowledge graph ``disappears'' into the model parameters.
+Changing the knowledge graph or deleting facts therefore becomes very laborous.
+% 
+ATLAS~\cite{DBLP:journals/jmlr/IzacardLLHPSDJRG23-atlas} is a retrieval-augmented method (RAG) for integrating knowledge-intensive tasks into a language model with few training examples.
+The goal of ATLAS is to learn facts and use them, e.\,g., for fact checking or asking trivia questions.
+%
+An overview of methods for editing knowledge graphs in language models can be found, e.\,g., in Cao et al.~\cite{DBLP:journals/ijautcomp/CaoLHS24}.
+
+Due to the text-based nature of language models such as T5, it was necessary for the graphs to be represented in text form.
+Features such as TF-IDF in GCN datasets cannot be well represented in so-called \textit{text-attributed graphs}.
+Knowledge graphs in RDFS or OWL, on the other hand, are well suited due to their descriptive properties of nodes and edges.
+A collection of text-based graphs can be found in TAGLAS~\cite{DBLP:journals/corr/abs-2406-14683-taglas}, among others.
+
+\subsection{Graph Foundation Models}
+
+Under the term \textit{graph foundation models}, there are a number of approaches for graphs that meet the above requirements.
+The models differ in terms of their architecture, i.\,e., whether they are based on an existing language model, a GNN, or a combination of language model and GNN~\cite{graph-foundation-models-survey}. 
+The Graph Language Model (GLM)~\cite{glm}, which is based on Google's T5 language model, belongs to the first category.
+The attention mechanism of T5's transformer layer has been modified so that masking takes into account the adjacency of nodes. 
+This modification of the attention mask also distinguishes GLM from the above-mentioned approaches such as SKILL.
+For T5, the input graph is converted into a Levi graph and then processed as text, like any other prompt, in the T5 model. 
+Due to the nature of GLM, it is suitable for processing both text and graphs natively, but is limited to text-attributed graphs.
+
+Models such as PRODIGY, PSP, and GraphAny pursue an approach based on GNNs.
+The first two, PRODIGY~\cite{prodigy} and PSP~\cite{psp}, can be understood as native graph-based foundation models that map a graph prompt in analogy to a text prompt. 
+Based on a pre-trained model, similar to language models, several graphs can be given as examples (\textit{context learning}) along with the task to be solved.
+Unlike PRODIGY, PSP works with prototypes that represent the graphs.
+GraphAny~\cite{graphany} uses a combination of different linear GNNs based on the Simplified GCN Model (SGC)~\cite{sgc}.
+In order to meet the requirement of being usable for various downstream tasks, GraphAny has a mechanism for handling different dimensionalities of node features in graph datasets.
+GraphAny is very efficient due to the use of linear models.
+In addition, training on a few examples is sufficient to achieve strong performance on other datasets with different features.
+%
+Approaches in the field of combining language models and GNNs include~\cite{opengraph,ofa,gofa}.
+
+An overview of graph foundation models is provided by Liu et al.~\cite{DBLP:journals/corr/abs-2310-11829-graphfoundationmodels-survey}
+and Fan et al.~\cite{DBLP:journals/corr/abs-2404-14928}.
+	
+%%% -----------------------------------------------------
+
+
+
 \section{Applications}
 \label{sec:userinterfaces}
 \label{sec:examples}
@@ -1094,6 +1291,6 @@ Neuro-symbolic systems could also address the problem that LLMs' output is based
 Finally, we like to point to existing literature discussing the future directions of research on the Semantic Web~\cite{DBLP:journals/corr/abs-2309-13939} and Knowledge Graphs~\cite{DBLP:journals/corr/abs-2308-14217}.
 Breit et al. \cite{10.1145/3586163} conducted a survey on the fusion of Semantic Web and Machine Learning, exploring the opportunities arising from the convergence of these two paradigms.
 
-\bibliography{tgdkbib}
+\bibliography{references,references-grl}
 
 \end{document}
