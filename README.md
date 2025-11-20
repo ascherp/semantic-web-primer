@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a long-running Semantic Web primer. Access to the latest version of the compiled PDF of the [Semantic Web Primer](https://github.com/ascherp/semantic-web-primer/blob/main/paper/main-semweb.pdf).
+This is a long-running Semantic Web primer. Access to the latest version of the compiled PDF of the [Semantic Web Primer](https://raw.githubusercontent.com/ascherp/semantic-web-primer/main/paper/main-semweb.pdf).
 
 Versions:
 - [Version 2025-11-11 on arXiv](https://arxiv.org/abs/2412.17159v2): added sections on machine learning on knowledge graphs as well as language models and knowledge graphs
